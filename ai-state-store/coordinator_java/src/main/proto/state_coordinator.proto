@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package coordinator; // Added semicolon here
+
+// These options are required for the Maven plugin to generate code properly
+option java_package = "com.ai.coordinator";
+option java_multiple_files = true;
+
+service StateCoordinator {
+  rpc SendHeartbeat(HeartBeatRequest) returns (HeartBeatResponse);
+  rpc AcquireLock(LockRequest) returns (LockResponse);
+}
+
+message HeartBeatRequest {
+    string agent_id = 1;
+    string current_task = 2;
+    float load_percentage = 3;
+}
+
+message HeartBeatResponse {
+    bool acknowledged = 1;
+    string command = 2;
+}
+
+message LockRequest {
+    string agent_id = 1;
+    string resource_id = 2;
+}
+
+message LockResponse {
+  bool success = 1;
+  string lock_token = 2;
+}

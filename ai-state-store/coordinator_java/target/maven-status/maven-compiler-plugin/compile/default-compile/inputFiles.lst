@@ -1,0 +1,12 @@
+/workspaces/SpringBootTutorial/ai-state-store/coordinator_java/target/generated-sources/protobuf/grpc-java/com/ai/coordinator/StateCoordinatorGrpc.java
+/workspaces/SpringBootTutorial/ai-state-store/coordinator_java/target/generated-sources/protobuf/java/com/ai/coordinator/HeartBeatResponseOrBuilder.java
+/workspaces/SpringBootTutorial/ai-state-store/coordinator_java/target/generated-sources/protobuf/java/com/ai/coordinator/HeartBeatRequestOrBuilder.java
+/workspaces/SpringBootTutorial/ai-state-store/coordinator_java/src/main/java/com/ai/coordinator/CoordinatorApplication.java
+/workspaces/SpringBootTutorial/ai-state-store/coordinator_java/target/generated-sources/protobuf/java/com/ai/coordinator/LockResponse.java
+/workspaces/SpringBootTutorial/ai-state-store/coordinator_java/target/generated-sources/protobuf/java/com/ai/coordinator/HeartBeatRequest.java
+/workspaces/SpringBootTutorial/ai-state-store/coordinator_java/target/generated-sources/protobuf/java/com/ai/coordinator/LockRequestOrBuilder.java
+/workspaces/SpringBootTutorial/ai-state-store/coordinator_java/target/generated-sources/protobuf/java/com/ai/coordinator/LockRequest.java
+/workspaces/SpringBootTutorial/ai-state-store/coordinator_java/src/main/java/com/ai/coordinator/StateCoordinatorService.java
+/workspaces/SpringBootTutorial/ai-state-store/coordinator_java/target/generated-sources/protobuf/java/com/ai/coordinator/HeartBeatResponse.java
+/workspaces/SpringBootTutorial/ai-state-store/coordinator_java/target/generated-sources/protobuf/java/com/ai/coordinator/LockResponseOrBuilder.java
+/workspaces/SpringBootTutorial/ai-state-store/coordinator_java/target/generated-sources/protobuf/java/com/ai/coordinator/StateCoordinatorOuterClass.java
