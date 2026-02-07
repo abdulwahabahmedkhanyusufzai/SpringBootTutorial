@@ -24,6 +24,11 @@ class StateCoordinatorStub(object):
                 request_serializer=state__coordinator__pb2.LockRequest.SerializeToString,
                 response_deserializer=state__coordinator__pb2.LockResponse.FromString,
                 )
+        self.ReleaseLock = channel.unary_unary(
+                '/coordinator.StateCoordinator/ReleaseLock',
+                request_serializer=state__coordinator__pb2.LockRequest.SerializeToString,
+                response_deserializer=state__coordinator__pb2.LockResponse.FromString,
+                )
 
 
 class StateCoordinatorServicer(object):
@@ -41,6 +46,13 @@ class StateCoordinatorServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def ReleaseLock(self, request, context):
+        """<-- Add this line
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_StateCoordinatorServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -51,6 +63,11 @@ def add_StateCoordinatorServicer_to_server(servicer, server):
             ),
             'AcquireLock': grpc.unary_unary_rpc_method_handler(
                     servicer.AcquireLock,
+                    request_deserializer=state__coordinator__pb2.LockRequest.FromString,
+                    response_serializer=state__coordinator__pb2.LockResponse.SerializeToString,
+            ),
+            'ReleaseLock': grpc.unary_unary_rpc_method_handler(
+                    servicer.ReleaseLock,
                     request_deserializer=state__coordinator__pb2.LockRequest.FromString,
                     response_serializer=state__coordinator__pb2.LockResponse.SerializeToString,
             ),
@@ -93,6 +110,23 @@ class StateCoordinator(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/coordinator.StateCoordinator/AcquireLock',
+            state__coordinator__pb2.LockRequest.SerializeToString,
+            state__coordinator__pb2.LockResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def ReleaseLock(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/coordinator.StateCoordinator/ReleaseLock',
             state__coordinator__pb2.LockRequest.SerializeToString,
             state__coordinator__pb2.LockResponse.FromString,
             options, channel_credentials,

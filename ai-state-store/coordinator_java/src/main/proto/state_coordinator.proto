@@ -9,6 +9,7 @@ option java_multiple_files = true;
 service StateCoordinator {
   rpc SendHeartbeat(HeartBeatRequest) returns (HeartBeatResponse);
   rpc AcquireLock(LockRequest) returns (LockResponse);
+  rpc ReleaseLock(LockRequest) returns (LockResponse); // <-- Add this line
 }
 
 message HeartBeatRequest {

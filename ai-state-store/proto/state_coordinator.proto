@@ -4,8 +4,8 @@ package coordinator;
 
 service StateCoordinator {
   rpc SendHeartbeat(HeartBeatRequest) returns (HeartBeatResponse);
-
-  rpc AccquireLock(LockRequest) returns (LockResponse);
+  rpc AcquireLock(LockRequest) returns (LockResponse);
+  rpc ReleaseLock(LockRequest) returns (LockResponse); // <-- Add this line
 }
 
 message HeartBeatRequest{

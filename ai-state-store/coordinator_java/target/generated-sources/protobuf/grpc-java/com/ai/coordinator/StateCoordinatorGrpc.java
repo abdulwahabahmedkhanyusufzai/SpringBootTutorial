@@ -77,6 +77,37 @@ public final class StateCoordinatorGrpc {
     return getAcquireLockMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<com.ai.coordinator.LockRequest,
+      com.ai.coordinator.LockResponse> getReleaseLockMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "ReleaseLock",
+      requestType = com.ai.coordinator.LockRequest.class,
+      responseType = com.ai.coordinator.LockResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.ai.coordinator.LockRequest,
+      com.ai.coordinator.LockResponse> getReleaseLockMethod() {
+    io.grpc.MethodDescriptor<com.ai.coordinator.LockRequest, com.ai.coordinator.LockResponse> getReleaseLockMethod;
+    if ((getReleaseLockMethod = StateCoordinatorGrpc.getReleaseLockMethod) == null) {
+      synchronized (StateCoordinatorGrpc.class) {
+        if ((getReleaseLockMethod = StateCoordinatorGrpc.getReleaseLockMethod) == null) {
+          StateCoordinatorGrpc.getReleaseLockMethod = getReleaseLockMethod =
+              io.grpc.MethodDescriptor.<com.ai.coordinator.LockRequest, com.ai.coordinator.LockResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "ReleaseLock"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.ai.coordinator.LockRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.ai.coordinator.LockResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new StateCoordinatorMethodDescriptorSupplier("ReleaseLock"))
+              .build();
+        }
+      }
+    }
+    return getReleaseLockMethod;
+  }
+
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -138,6 +169,16 @@ public final class StateCoordinatorGrpc {
         io.grpc.stub.StreamObserver<com.ai.coordinator.LockResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getAcquireLockMethod(), responseObserver);
     }
+
+    /**
+     * <pre>
+     * &lt;-- Add this line
+     * </pre>
+     */
+    default void releaseLock(com.ai.coordinator.LockRequest request,
+        io.grpc.stub.StreamObserver<com.ai.coordinator.LockResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getReleaseLockMethod(), responseObserver);
+    }
   }
 
   /**
@@ -182,6 +223,17 @@ public final class StateCoordinatorGrpc {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getAcquireLockMethod(), getCallOptions()), request, responseObserver);
     }
+
+    /**
+     * <pre>
+     * &lt;-- Add this line
+     * </pre>
+     */
+    public void releaseLock(com.ai.coordinator.LockRequest request,
+        io.grpc.stub.StreamObserver<com.ai.coordinator.LockResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getReleaseLockMethod(), getCallOptions()), request, responseObserver);
+    }
   }
 
   /**
@@ -212,6 +264,16 @@ public final class StateCoordinatorGrpc {
     public com.ai.coordinator.LockResponse acquireLock(com.ai.coordinator.LockRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getAcquireLockMethod(), getCallOptions(), request);
+    }
+
+    /**
+     * <pre>
+     * &lt;-- Add this line
+     * </pre>
+     */
+    public com.ai.coordinator.LockResponse releaseLock(com.ai.coordinator.LockRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getReleaseLockMethod(), getCallOptions(), request);
     }
   }
 
@@ -246,10 +308,22 @@ public final class StateCoordinatorGrpc {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getAcquireLockMethod(), getCallOptions()), request);
     }
+
+    /**
+     * <pre>
+     * &lt;-- Add this line
+     * </pre>
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.ai.coordinator.LockResponse> releaseLock(
+        com.ai.coordinator.LockRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getReleaseLockMethod(), getCallOptions()), request);
+    }
   }
 
   private static final int METHODID_SEND_HEARTBEAT = 0;
   private static final int METHODID_ACQUIRE_LOCK = 1;
+  private static final int METHODID_RELEASE_LOCK = 2;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -274,6 +348,10 @@ public final class StateCoordinatorGrpc {
           break;
         case METHODID_ACQUIRE_LOCK:
           serviceImpl.acquireLock((com.ai.coordinator.LockRequest) request,
+              (io.grpc.stub.StreamObserver<com.ai.coordinator.LockResponse>) responseObserver);
+          break;
+        case METHODID_RELEASE_LOCK:
+          serviceImpl.releaseLock((com.ai.coordinator.LockRequest) request,
               (io.grpc.stub.StreamObserver<com.ai.coordinator.LockResponse>) responseObserver);
           break;
         default:
@@ -308,6 +386,13 @@ public final class StateCoordinatorGrpc {
               com.ai.coordinator.LockRequest,
               com.ai.coordinator.LockResponse>(
                 service, METHODID_ACQUIRE_LOCK)))
+        .addMethod(
+          getReleaseLockMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.ai.coordinator.LockRequest,
+              com.ai.coordinator.LockResponse>(
+                service, METHODID_RELEASE_LOCK)))
         .build();
   }
 
@@ -358,6 +443,7 @@ public final class StateCoordinatorGrpc {
               .setSchemaDescriptor(new StateCoordinatorFileDescriptorSupplier())
               .addMethod(getSendHeartbeatMethod())
               .addMethod(getAcquireLockMethod())
+              .addMethod(getReleaseLockMethod())
               .build();
         }
       }

@@ -51,12 +51,13 @@ public final class StateCoordinatorOuterClass {
       "\030\001 \001(\010\022\017\n\007command\030\002 \001(\t\"4\n\013LockRequest\022\020" +
       "\n\010agent_id\030\001 \001(\t\022\023\n\013resource_id\030\002 \001(\t\"3\n" +
       "\014LockResponse\022\017\n\007success\030\001 \001(\010\022\022\n\nlock_t" +
-      "oken\030\002 \001(\t2\246\001\n\020StateCoordinator\022N\n\rSendH" +
+      "oken\030\002 \001(\t2\352\001\n\020StateCoordinator\022N\n\rSendH" +
       "eartbeat\022\035.coordinator.HeartBeatRequest\032" +
       "\036.coordinator.HeartBeatResponse\022B\n\013Acqui" +
       "reLock\022\030.coordinator.LockRequest\032\031.coord" +
-      "inator.LockResponseB\026\n\022com.ai.coordinato" +
-      "rP\001b\006proto3"
+      "inator.LockResponse\022B\n\013ReleaseLock\022\030.coo" +
+      "rdinator.LockRequest\032\031.coordinator.LockR" +
+      "esponseB\026\n\022com.ai.coordinatorP\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,

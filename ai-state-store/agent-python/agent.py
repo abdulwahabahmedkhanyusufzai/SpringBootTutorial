@@ -2,38 +2,61 @@ import grpc
 import time
 import state_coordinator_pb2
 import state_coordinator_pb2_grpc
+from google.adk.agents import Agent
+from google.adk.tools import FunctionTool
+
+# 1. Define a real Google ADK Tool
+def knowledge_graph_update(data: str):
+    """Simulates updating a shared Knowledge Graph on Google Cloud."""
+    return f"Successfully updated Knowledge Graph with: {data}"
+
+# 2. Setup the ADK Agent
+adk_agent = Agent(
+    name="DeepMind_Researcher",
+    instruction="Process data only when the Coordinator grants access.",
+    tools=[FunctionTool(knowledge_graph_update)]
+)
 
 def run_agent(agent_id):
-    # Connect to the Java Spring Boot server
-    # Port 9090 is the default for the gRPC Spring Boot starter
     with grpc.insecure_channel('localhost:9090') as channel:
-        # Create the 'Stub' (this is your client-side bridge)
         stub = state_coordinator_pb2_grpc.StateCoordinatorStub(channel)
+        print(f"🚀 Google ADK Agent {agent_id} is online...")
+
+        lock_request = state_coordinator_pb2.LockRequest(
+            agent_id=agent_id, 
+            resource_id="knowledge-graph-lock"
+        )
         
-        print(f"🚀 Agent {agent_id} is online and looking for Coordinator...")
-        
+        try:
+            lock_response = stub.AcquireLock(lock_request)
+            if lock_response.success:
+                print(f"🔒 LOCK GRANTED. Triggering Google ADK...")
+                
+                # REAL WORK: Use the Google ADK Agent here
+                result = adk_agent.run("Update graph with 'New JAX Model Metadata'")
+                print(f"🤖 ADK Response: {result.text}")
+                
+                time.sleep(3) # Hold lock briefly to show collision in logs
+                stub.ReleaseLock(lock_request)
+                print("🔓 Work complete. Lock released.")
+            else:
+                print("❌ ACCESS DENIED: Another ADK Agent is using the Knowledge Graph.")
+        except grpc.RpcError as e:
+            print(f"⚠️ Coordinator Error: {e.code()}")
+
+        # Heartbeat Loop continues...
         while True:
             try:
-                # Prepare the Heartbeat Data
                 request = state_coordinator_pb2.HeartBeatRequest(
                     agent_id=agent_id,
-                    current_task="Optimizing Knowledge Graph",
-                    load_percentage=22.5
+                    current_task="ADK Idle",
+                    load_percentage=5.0
                 )
-                
-                # Make the RPC call to the Java Server
-                response = stub.SendHeartbeat(request)
-                
-                if response.acknowledged:
-                    print(f"✅ Coordinator Ack: Command = {response.command}")
-                
-            except grpc.RpcError as e:
-                # If Java server is down, this prevents the Python script from crashing
-                print(f"⚠️ Coordinator offline (Status: {e.code()}). Retrying in 5s...")
-                time.sleep(3) # Wait a bit longer if there's an error
-
-            time.sleep(2) # Normal heartbeat interval
+                stub.SendHeartbeat(request)
+                time.sleep(2)
+            except grpc.RpcError:
+                time.sleep(3)
 
 if __name__ == "__main__":
-    # You can change this ID for different workers
+    # Run Agent 01 in Terminal A and Agent 02 in Terminal B
     run_agent("PYTHON_WORKER_01")
